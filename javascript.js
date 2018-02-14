@@ -23,10 +23,12 @@ function showPosition(position) {
     var city=json.name;
     var tempCelcius=json.main.temp;
     var tempFahrenheit=tempCelcius * 9/5 +32;
+    var weatherDesc = json.weather[0].description;
     console.log(city);
+    document.getElementById("userLocation").innerHTML = city;
     console.log(tempCelcius);
+    document.getElementById("temperature").innerHTML = tempCelcius + " " +String.fromCharCode(176) + "C";
     console.log(tempFahrenheit);
+    document.getElementById("weatherDescription").innerHTML = weatherDesc;
+    document.getElementById("weatherIcon").src=json.weather[0].icon;
  })}
-
-function getWeather(){
-   }
