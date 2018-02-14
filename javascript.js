@@ -16,10 +16,16 @@ function showPosition(position) {
     var lon= position.coords.longitude;
     console.log(lat);
     console.log(lon);
-    var apiUrl = api + "lon=" + parseFloat(lon) + "&lat=" + parseFloat(lat);
+    var apiUrl = api + "lon=" + lon + "&lat=" + lat;
     console.log(apiUrl);
  $.getJSON(apiUrl, function(json){
     console.log(json);
+    var city=json.name;
+    var tempCelcius=json.main.temp;
+    var tempFahrenheit=tempCelcius * 9/5 +32;
+    console.log(city);
+    console.log(tempCelcius);
+    console.log(tempFahrenheit);
  })}
 
 function getWeather(){
