@@ -1,9 +1,11 @@
 var api = "https://fcc-weather-api.glitch.me/api/current?";
 var lat, lon;
-
+var displayTemp;
+var tempCelcius;
+var tempFahrenheit;
 function getLocation(){
 if(navigator.geolocation){
-   navigator.geolocation.getCurrentPosition(showPosition);
+   navigator.geolocation.getCurrentPosition(showData);
    
 }
 else{
@@ -11,7 +13,7 @@ else{
 }
 
 }
-function showPosition(position) {
+function showData(position) {
     var lat= position.coords.latitude;
     var lon= position.coords.longitude;
     console.log(lat);
@@ -21,14 +23,34 @@ function showPosition(position) {
  $.getJSON(apiUrl, function(json){
     console.log(json);
     var city=json.name;
-    var tempCelcius=json.main.temp;
-    var tempFahrenheit=tempCelcius * 9/5 +32;
+    tempCelcius=json.main.temp;
+    displayTemp=tempCelcius;
+    tempFahrenheit=(tempCelcius * 9/5 +32).toFixed(2);
     var weatherDesc = json.weather[0].description;
     console.log(city);
     document.getElementById("userLocation").innerHTML = city;
     console.log(tempCelcius);
-    document.getElementById("temperature").innerHTML = tempCelcius + " " +String.fromCharCode(176) + "C";
-    console.log(tempFahrenheit);
+    document.getElementById("temperature").innerHTML = displayTemp + " " +String.fromCharCode(176) + "C";
+    console.log(tempFahrenheit);``
     document.getElementById("weatherDescription").innerHTML = weatherDesc;
-    document.getElementById("weatherIcon").src=json.weather[0].icon;
+    document.getElementById("weatherIcon").className="wi wi-owm-"+json.weather[0].id;
+    document.getElementsByTagName("html")[0].style.visibility = "visible";
+
+    console.log(displayTemp);
+    return displayTemp, tempCelcius, tempFahrenheit;
+
+
  })}
+ function displayCelcius(){
+    displayTemp= tempCelcius;
+    document.getElementById("temperature").innerHTML = displayTemp + " " +String.fromCharCode(176) + "C";
+    document.getElementById("c-button").className="btn btn-primary active";
+    document.getElementById("f-button").className="btn btn-default";
+
+} 
+function displayFahrenheit(){
+    displayTemp= tempFahrenheit;
+    document.getElementById("temperature").innerHTML = displayTemp + " " +String.fromCharCode(176) + "F";
+    document.getElementById("f-button").className="btn btn-primary active";
+    document.getElementById("c-button").className="btn btn-default";
+} 
