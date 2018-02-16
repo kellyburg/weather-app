@@ -1,6 +1,5 @@
 var api = "https://fcc-weather-api.glitch.me/api/current?";
 var lat, lon;
-var displayTemp;
 var tempCelcius;
 var tempFahrenheit;
 function getLocation(){
@@ -9,7 +8,7 @@ if(navigator.geolocation){
    
 }
 else{
-    document.getElementById("userLocation").innerHTML = "Unable to retrieve location";
+    document.getElementById("userCity").innerHTML = "Unable to retrieve location";
 }
 
 }
@@ -23,33 +22,30 @@ function showData(position) {
  $.getJSON(apiUrl, function(json){
     console.log(json);
     var city=json.name;
+    var country=json.sys.country;
     tempCelcius=json.main.temp;
-    displayTemp=tempCelcius;
     tempFahrenheit=(tempCelcius * 9/5 +32).toFixed(2);
     var weatherDesc = json.weather[0].description;
-    console.log(city);
-    document.getElementById("userLocation").innerHTML = city;
-    console.log(tempCelcius);
-    document.getElementById("temperature").innerHTML = displayTemp + " " +String.fromCharCode(176) + "C";
-    console.log(tempFahrenheit);``
+    document.getElementById("userLocation").innerHTML = city+", "+country;
+    
+    document.getElementById("temperature").innerHTML = tempCelcius + " " +String.fromCharCode(176) + "C";
     document.getElementById("weatherDescription").innerHTML = weatherDesc;
     document.getElementById("weatherIcon").className="wi wi-owm-"+json.weather[0].id;
     document.getElementsByTagName("html")[0].style.visibility = "visible";
 
-    console.log(displayTemp);
     return displayTemp, tempCelcius, tempFahrenheit;
 
 
  })}
  function displayCelcius(){
-    displayTemp= tempCelcius;
+    var displayTemp= tempCelcius;
     document.getElementById("temperature").innerHTML = displayTemp + " " +String.fromCharCode(176) + "C";
     document.getElementById("c-button").className="btn btn-primary active";
     document.getElementById("f-button").className="btn btn-default";
 
 } 
 function displayFahrenheit(){
-    displayTemp= tempFahrenheit;
+    var displayTemp= tempFahrenheit;
     document.getElementById("temperature").innerHTML = displayTemp + " " +String.fromCharCode(176) + "F";
     document.getElementById("f-button").className="btn btn-primary active";
     document.getElementById("c-button").className="btn btn-default";
